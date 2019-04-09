@@ -1,7 +1,7 @@
+import json
 import re
 import sys
 
-from nltk import RegexpParser
 import nltk
 import unidecode
 
@@ -79,7 +79,7 @@ def get_nodes_for_ntlk(parent, stopwords):
 def tokenize_by_nltk(text, stopwords=None, additional_stopwords=None, lang="en"):
     stopwords = prepare_stopwords(stopwords, additional_stopwords, lang)
     grammar = r'KT: {(<JJ>* <NN.*>+ <IN>)? <JJ>* <NN.*>+}'
-    chunker = RegexpParser(grammar)
+    chunker = nltk.RegexpParser(grammar)
 
     output = ""
     for line in text.splitlines():
@@ -119,7 +119,13 @@ def tokenize_chunk(text_part):
 
 
 def main():
-    print(tokenize_chunk(sys.argv[1]))
+    with open(sys.argv[1]) as f:
+        data = json.load(f)
+        result = []
+        for reference in data.get("references"):
+            title_abstract = "%s.%s" % (reference.get("title"), reference.get("abstract"))
+            result.append(list(set(tokenize_chunk(title_abstract))))
+        print(result)
 
 
 if __name__ == "__main__":
