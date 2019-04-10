@@ -127,7 +127,8 @@ def main():
         for reference in data.get("references"):
             title_abstract = "%s.%s" % (reference.get("title"), reference.get("abstract"))
             result.append(list(set(tokenize_chunk(title_abstract))))
-        print(result)
+    with open(sys.argv[2],'w+') as outfile:
+        json.dump(result,outfile)
 
 
 if __name__ == "__main__":

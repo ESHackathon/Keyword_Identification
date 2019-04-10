@@ -31,7 +31,7 @@ Keyword Identification is a Python library that receives a JSON file with multip
 ## Usage example
 
 ```
-python keyword_identification.py test.json > keywords.json
+python keyword_identification.py test.json out.json
 ```
 
 
